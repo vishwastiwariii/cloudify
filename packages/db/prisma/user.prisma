@@ -1,0 +1,25 @@
+model User {
+  id            String      @id     @default(uuid())
+  email         String      @unique
+  username      String?     @unique
+
+  password      String
+  
+  name          String
+
+  isVerified    Boolean     @default(false)
+  verifiedAt    DateTime? 
+
+  storageLimit  BigInt      @default(2147483648)
+  storageUsed   BigInt      @default(0)
+
+  deletedAt     DateTime?
+
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  sessions      Session[]
+  tokens        Token[]
+
+  @@index([deletedAt])
+}
