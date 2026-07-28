@@ -8,7 +8,7 @@ export async function handleSignup (req: Request, res: Response) {
     try {
         const validatedData = SignupSchema.parse(req.body)
 
-        const result = await authService.signUp(validatedData)
+        const result = await authService.signUp(validatedData, res)
 
         return res.status(200).json({
             success: true, 
@@ -17,7 +17,7 @@ export async function handleSignup (req: Request, res: Response) {
         })
     } catch (error: any) {
         if (error.name === 'ZodError') {
-            return res.status(400).json({ errors: error.errors });
+            return res.status(400).json({ errors: error.issues });
         }
         if (error instanceof AuthError) {
             return res.status(error.statusCode).json({ message: error.message });
@@ -27,11 +27,12 @@ export async function handleSignup (req: Request, res: Response) {
     }
 }
 
+
 export async function handleLogin (req: Request, res: Response) {
     try {
         const validatedData = LoginSchema.parse(req.body)
 
-        const result = await authService.login(validatedData)
+        const result = await authService.login(validatedData, res)
 
         return res.status(200).json({
             success: true,  
@@ -40,7 +41,29 @@ export async function handleLogin (req: Request, res: Response) {
         })
     } catch(error: any) {
         if (error.name === 'ZodError') {
-            return res.status(400).json({ errors: error.errors });
+            return res.status(400).json({ errors: error.issues });
+        }
+        if (error instanceof AuthError) {
+            return res.status(error.statusCode).json({ message: error.message });
+        }
+        console.error(error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+
+export async function handleLogout (req: Request, res: Response) {
+    try {
+        const result = await authService.logout(res)
+
+        return res.status(200).json({
+            success: true, 
+            data: result, 
+            message: "Logout successfully"
+        })
+    } catch (error: any) {
+        if (error.name === 'ZodError') {
+            return res.status(400).json({ errors: error.issues });
         }
         if (error instanceof AuthError) {
             return res.status(error.statusCode).json({ message: error.message });

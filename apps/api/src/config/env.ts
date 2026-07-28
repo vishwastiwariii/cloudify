@@ -2,6 +2,7 @@ import dotenv from 'dotenv'
 dotenv.config({ quiet: true })
 
 interface Config {
+    node_env: string
     jwt: {
         secret: string
         refreshSecret: string
@@ -26,7 +27,8 @@ const REQUIRED = [
     "SMTP_USER",
     "SMTP_PASS",
     "CLIENT_URL", 
-    "PORT"
+    "PORT", 
+    "NODE_ENV"
 ]
 
 
@@ -54,7 +56,8 @@ const config: Config = {
         pass: getEnv("SMTP_PASS"),
     },
     clientUrl: getEnv("CLIENT_URL"),
-    port: Number(getEnv("PORT"))
+    port: Number(getEnv("PORT")), 
+    node_env: getEnv("NODE_ENV")
 }
 
 export default config
