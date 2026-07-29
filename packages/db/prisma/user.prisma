@@ -7,9 +7,9 @@ model User {
   
   name          String
 
-  avatar        String
+  avatar        String?
 
-  isVerified    Boolean     @default(false)
+  isVerified    Boolean     @default(true)
   verifiedAt    DateTime? 
 
   storageLimit  BigInt      @default(2147483648)
