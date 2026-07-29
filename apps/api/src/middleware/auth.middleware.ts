@@ -14,7 +14,7 @@ export async function authMiddleware (req: Request, _res: Response, next: NextFu
 
         const user = await authService.authenticate(token); 
 
-        req.user = user; 
+        req.user = user;
 
         next()
     } catch (error: any) {
