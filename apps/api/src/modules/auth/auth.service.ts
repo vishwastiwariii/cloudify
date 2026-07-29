@@ -66,7 +66,7 @@ export class AuthService {
             data: {
                 email: email, 
                 password: hashedPassword, 
-                name: name
+                name: name,
             }
         })
 
