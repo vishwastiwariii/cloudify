@@ -1,19 +1,7 @@
 import prisma from "@repo/db";
 import type { UpdateAvatarDto, UpdateNameDto } from "@repo/validation";
 import { AuthError } from "../auth/auth.service";
-
-const userSelect = {
-    id: true,
-    name: true,
-    email: true,
-    username: true,
-    avatar: true,
-    isVerified: true,
-    storageLimit: true,
-    storageUsed: true,
-    createdAt: true,
-    updatedAt: true
-}
+import { USER_PUBLIC_SELECT } from "./user.constants";
 
 export class UserService {
     private serializeUser<T extends { storageLimit: bigint, storageUsed: bigint }>(user: T) {
@@ -34,7 +22,7 @@ export class UserService {
             data: {
                 name: name
             },
-            select: userSelect
+            select: USER_PUBLIC_SELECT
         })
 
         return this.serializeUser(user)
@@ -45,7 +33,7 @@ export class UserService {
             where: {
                 id: userId
             },
-            select: userSelect
+            select: USER_PUBLIC_SELECT
         })
 
         if(!user) {
@@ -65,7 +53,7 @@ export class UserService {
             data: {
                 avatar: avatarUrl
             },
-            select: userSelect
+            select: USER_PUBLIC_SELECT
         })
 
         return this.serializeUser(user)
