@@ -9,4 +9,4 @@ export const updateAvatarSchema = z.object({
 })
 
 export type UpdateNameDto = z.infer<typeof updateNameSchema>
-export type updateAvatarDto = z.infer<typeof updateAvatarSchema>
+export type UpdateAvatarDto = z.infer<typeof updateAvatarSchema>
