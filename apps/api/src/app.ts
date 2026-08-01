@@ -7,6 +7,7 @@ import config from './config/env'
 import authRoutes from './modules/auth/auth.routes'
 import userRoutes from './modules/users/user.routes'
 import folderRoutes from './modules/folders/folder.routes'
+import fileRoutes from './modules/files/file.routes'
 import { errorHandler } from './middleware/error.middleware'
 
 const app: Express = express()
@@ -24,6 +25,7 @@ app.use(limiter)
 app.use('/auth', authRoutes)
 app.use('/user', userRoutes)
 app.use('/folders', folderRoutes)
+app.use('/files', fileRoutes)
 
 app.use(errorHandler)
 
