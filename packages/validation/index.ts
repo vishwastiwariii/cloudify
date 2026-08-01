@@ -1,3 +1,4 @@
 export * from './auth.validation'
 export * from './user.validation'
 export * from './folder.validation'
+export * from './file.validation'
