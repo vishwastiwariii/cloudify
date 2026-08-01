@@ -23,6 +23,7 @@ model User {
   sessions      Session[]
   tokens        Token[]
   folders       Folder[]
+  files         File[]
 
   @@index([deletedAt])
 }

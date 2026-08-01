@@ -1,0 +1,32 @@
+model File {
+    id              String      @id         @default(cuid())
+    name            String
+
+    originalName    String  //Original file name in user's device
+
+    storageKey      String      @unique
+
+    bucket          String
+
+    mimeType        String
+    size            BigInt
+
+    checkSum        String? 
+
+    ownerId         String 
+    owner           User        @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+    folderId        String?
+    folder          Folder?      @relation(fields: [folderId], references: [id], onDelete: Cascade)
+
+    deletedAt       DateTime?
+
+    createdAt       DateTime    @default(now())
+    updatedAt       DateTime    @updatedAt
+
+
+    @@index([folderId])
+    @@index([ownerId])
+    @@index([deletedAt])
+    @@index([storageKey])
+}
