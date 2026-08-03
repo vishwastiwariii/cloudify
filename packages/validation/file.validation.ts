@@ -2,7 +2,13 @@ import { z } from 'zod'
 
 export const createFileSchema = z.object({
     name: z.string().trim().min(1).max(255),
-    folderId: z.string().cuid().optional()
+    originalName: z.string().trim().min(1).max(255),
+    folderId: z.string().cuid().optional(),
+    storageKey: z.string().trim().min(1),
+    bucket: z.string().trim().min(1),
+    mimeType: z.string().trim().min(1),
+    size: z.coerce.bigint().positive(),
+    checkSum: z.string().trim().optional()
 })
 
 export const fileIdParamsSchema = z.object({
