@@ -15,7 +15,11 @@ interface Config {
         pass: string
     }
     clientUrl: string, 
-    port: number
+    port: number,
+    gcp_bucket_name: string,
+    gcp_project_id: string, 
+    gcp_client_email: string, 
+    gcp_private_key: string
 }
 
 const REQUIRED = [ 
@@ -28,7 +32,11 @@ const REQUIRED = [
     "SMTP_PASS",
     "CLIENT_URL", 
     "PORT", 
-    "NODE_ENV"
+    "NODE_ENV",
+    "GCP_PROJECT_ID",
+    "GCP_BUCKET_NAME", 
+    "GCP_CLIENT_EMAIL", 
+    "GCP_PRIVATE_KEY"
 ]
 
 
@@ -57,7 +65,11 @@ const config: Config = {
     },
     clientUrl: getEnv("CLIENT_URL"),
     port: Number(getEnv("PORT")), 
-    node_env: getEnv("NODE_ENV")
+    node_env: getEnv("NODE_ENV"),
+    gcp_bucket_name: getEnv("GCP_BUCKET_NAME"),
+    gcp_client_email: getEnv("GCP_CLIENT_EMAIL"),
+    gcp_private_key: getEnv("GCP_PRIVATE_KEY"), 
+    gcp_project_id: getEnv("GCP_PROJECT_ID")
 }
 
 export default config
