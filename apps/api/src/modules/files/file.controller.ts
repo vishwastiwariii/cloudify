@@ -11,7 +11,12 @@ export async function getAllFile(req: Request, res: Response) {
             throw new AuthError('Authentication Required', 401)
         }
 
-        const validatedData = listFileSchema.parse({ query: req.query })
+        const validatedData = listFileSchema.parse({
+            query: {
+                ...req.query,
+                folderId: req.params.folderId ?? req.query.folderId
+            }
+        })
 
         const result = await fileService.getAllFile(req.user.id, validatedData.query)
 
