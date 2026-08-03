@@ -19,6 +19,7 @@ model Folder {
     updatedAt   DateTime        @updatedAt
 
     files       File[]
+    uploadSessions UploadSession[]
 
     @@index([ownerId])
     @@index([parentId])

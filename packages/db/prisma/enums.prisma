@@ -2,3 +2,10 @@ enum TokenType {
     EMAIL_VERIFICATION
     PASSWORD_RESET
 }
+
+enum UploadStatus {
+    PENDING 
+    FAILED
+    COMPLETED 
+    CANCELLED
+}
