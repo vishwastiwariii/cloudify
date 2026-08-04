@@ -59,12 +59,12 @@ export class GoogleStorageProvider {
         const [metadata] = await file.getMetadata()
 
         return {
-            objectKey, 
-            size: Number(metadata.size), 
-            contentType: metadata.contentType ?? "", 
-            etag: metadata.etag, 
-            md5Hash: metadata.md5Hash, 
-            updatedAt: metadata.updated ? new Date(metadata.updated) : undefined
+            objectKey,
+            size: Number(metadata.size),
+            contentType: metadata.contentType ?? "",
+            ...(metadata.etag !== undefined && { etag: metadata.etag }),
+            ...(metadata.md5Hash !== undefined && { md5Hash: metadata.md5Hash }),
+            ...(metadata.updated !== undefined && { updatedAt: new Date(metadata.updated) })
         }
     }
 
