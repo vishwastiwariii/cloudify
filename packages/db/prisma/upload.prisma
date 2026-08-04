@@ -4,8 +4,8 @@ model UploadSession {
     ownerId String 
     owner   User           @relation(fields: [ownerId], references: [id], onDelete: Cascade)
 
-    folderId String
-    folder  Folder         @relation(fields: [folderId], references: [id], onDelete: Cascade)    
+    folderId String?
+    folder  Folder?         @relation(fields: [folderId], references: [id], onDelete: Cascade)    
 
     originalName String 
     mimeType    String 
