@@ -10,6 +10,7 @@ import folderRoutes from './modules/folders/folder.routes'
 import fileRoutes from './modules/files/file.routes'
 import uploadRoutes from './modules/upload/uploads.routes'
 import storageRoutes from './modules/storage/storage.routes'
+import downloadRoutes from './modules/download/download.routes'
 import { errorHandler } from './middleware/error.middleware'
 
 const app: Express = express()
@@ -28,6 +29,7 @@ app.use('/auth', authRoutes)
 app.use('/user', userRoutes)
 app.use('/folders', folderRoutes)
 app.use('/files', fileRoutes)
+app.use('/files', downloadRoutes)
 app.use('/uploads', uploadRoutes)
 app.use('/storage', storageRoutes)
 

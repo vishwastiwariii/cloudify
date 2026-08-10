@@ -7,7 +7,7 @@ export class GoogleStorageProvider {
 
     async generateSignedUploadUrl (
         options: GenerateSignedUploadUrlOptions
-    ) : Promise<String> {
+    ) : Promise<string> {
         const file = bucket.file(options.objectKey)
 
         const config: GetSignedUrlConfig = {
@@ -25,7 +25,7 @@ export class GoogleStorageProvider {
 
     async generateSignedDownloadUrl (
         options: GenerateSignedDownloadUrlOptions
-    ) : Promise<String> {
+    ) : Promise<string> {
         const file = bucket.file(options.objectKey)
 
         const config : GetSignedUrlConfig = {
