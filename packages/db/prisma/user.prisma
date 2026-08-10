@@ -12,8 +12,8 @@ model User {
   isVerified    Boolean     @default(true)
   verifiedAt    DateTime? 
 
-  storageLimit  BigInt      @default(2147483648)
-  storageUsed   BigInt      @default(0)
+  storageLimit  BigInt      @default(2147483648) //2GB in bytes
+  storageUsed   BigInt      @default(0) //Active files + trash files 
 
   deletedAt     DateTime?
 
