@@ -1,0 +1,4 @@
+export const PUBLIC_SHARE_TOKEN_BYTES = 32
+
+export const PUBLIC_SHARE_DOWNLOAD_URL_EXPIRATION =
+  5 * 60 * 1000;

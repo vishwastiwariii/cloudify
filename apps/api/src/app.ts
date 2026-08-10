@@ -11,6 +11,7 @@ import fileRoutes from './modules/files/file.routes'
 import uploadRoutes from './modules/upload/uploads.routes'
 import storageRoutes from './modules/storage/storage.routes'
 import downloadRoutes from './modules/download/download.routes'
+import shareRoutes, { publicShareRouter } from './modules/share/share.routes'
 import { errorHandler } from './middleware/error.middleware'
 
 const app: Express = express()
@@ -30,6 +31,8 @@ app.use('/user', userRoutes)
 app.use('/folders', folderRoutes)
 app.use('/files', fileRoutes)
 app.use('/files', downloadRoutes)
+app.use('/files', shareRoutes)
+app.use('/share', publicShareRouter)
 app.use('/uploads', uploadRoutes)
 app.use('/storage', storageRoutes)
 
