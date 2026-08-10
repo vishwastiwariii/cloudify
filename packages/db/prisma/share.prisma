@@ -1,0 +1,20 @@
+model PublicShare {
+    id      String      @id        @default(cuid())
+
+    fileId  String      @unique
+    file    File        @relation(fields: [fileId], references: [id], onDelete: Cascade)
+
+    token   String      @unique         // important for security
+
+    passwordHash    String?
+
+    expiresAt   DateTime?
+
+    isActive    Boolean     @default(true)
+
+    createdAt       DateTime        @default(now())
+    updatedAt       DateTime        @updatedAt
+
+    @@index([expiresAt])
+    @@index([token])
+}

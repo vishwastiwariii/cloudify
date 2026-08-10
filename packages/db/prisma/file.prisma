@@ -19,6 +19,8 @@ model File {
     folderId        String?
     folder          Folder?      @relation(fields: [folderId], references: [id], onDelete: Cascade)
 
+    publicShare     PublicShare?
+
     deletedAt       DateTime?
 
     createdAt       DateTime    @default(now())
