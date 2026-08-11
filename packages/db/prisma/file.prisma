@@ -27,8 +27,8 @@ model File {
     updatedAt       DateTime    @updatedAt
 
 
-    @@index([folderId])
     @@index([ownerId])
-    @@index([deletedAt])
-    @@index([storageKey])
+    @@index([ownerId, deletedAt])
+    @@index([ownerId, folderId, deletedAt])
+    @@index([ownerId, createdAt])
 }
