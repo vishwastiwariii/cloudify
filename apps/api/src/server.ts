@@ -2,6 +2,7 @@ import config from './config/env'
 import prisma from '@repo/db'
 import app from './app'
 import { redis } from './infrastructure/redis'
+import { closeQueues } from './infrastructure/queue'
 import http from "node:http";
 
 const PORT = config.port
@@ -49,12 +50,16 @@ async function shutdown () {
                 (resolve) => {
                     server!.close(() => {
                         console.log("HTTP server closed")
-                    })
 
-                    resolve()
+                        resolve()
+                    })
                 }
             )
         }
+
+        // BullMQ opens its own Redis connections, separate from `redis` below.
+        await closeQueues()
+        console.log("Queues closed")
 
         if(redis.status === "ready" || redis.status === "connecting") {
             await redis.quit()

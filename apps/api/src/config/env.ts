@@ -14,8 +14,9 @@ interface Config {
         user: string
         pass: string
     }
-    clientUrl: string, 
+    clientUrl: string,
     port: number,
+    queuePrefix: string,
     gcp_bucket_name: string,
     gcp_project_id: string, 
     gcp_client_email: string, 
@@ -50,6 +51,8 @@ function getEnv(key: string) {
     return value
 }
 
+const nodeEnv = getEnv("NODE_ENV")
+
 
 const config: Config = {
     jwt: {
@@ -64,8 +67,11 @@ const config: Config = {
         pass: getEnv("SMTP_PASS"),
     },
     clientUrl: getEnv("CLIENT_URL"),
-    port: Number(getEnv("PORT")), 
-    node_env: getEnv("NODE_ENV"),
+    port: Number(getEnv("PORT")),
+    node_env: nodeEnv,
+    // Namespaces BullMQ's Redis keys so environments sharing a Redis instance
+    // cannot consume each other's jobs. Optional: defaults per NODE_ENV.
+    queuePrefix: process.env.QUEUE_PREFIX || `bull:${nodeEnv}`,
     gcp_bucket_name: getEnv("GCP_BUCKET_NAME"),
     gcp_client_email: getEnv("GCP_CLIENT_EMAIL"),
     gcp_private_key: getEnv("GCP_PRIVATE_KEY"), 
