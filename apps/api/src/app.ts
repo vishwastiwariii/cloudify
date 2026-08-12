@@ -12,6 +12,7 @@ import uploadRoutes from './modules/upload/uploads.routes'
 import storageRoutes from './modules/storage/storage.routes'
 import downloadRoutes from './modules/download/download.routes'
 import searchRoutes from './modules/search/search.routes'
+import dashboardRoutes from './modules/dashboard/dashboard.routes'
 import shareRoutes, { publicShareRouter } from './modules/share/share.routes'
 import { errorHandler } from './middleware/error.middleware'
 
@@ -37,6 +38,7 @@ app.use('/share', publicShareRouter)
 app.use('/uploads', uploadRoutes)
 app.use('/storage', storageRoutes)
 app.use('/search', searchRoutes)
+app.use('/dashboard', dashboardRoutes)
 
 app.use(errorHandler)
 
