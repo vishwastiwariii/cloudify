@@ -51,7 +51,8 @@ function getEnv(key: string) {
     return value
 }
 
-const nodeEnv = getEnv("NODE_ENV")
+// Lowercased so the value is comparable regardless of how it was written in
+const nodeEnv = getEnv("NODE_ENV").toLowerCase()
 
 
 const config: Config = {
@@ -69,8 +70,6 @@ const config: Config = {
     clientUrl: getEnv("CLIENT_URL"),
     port: Number(getEnv("PORT")),
     node_env: nodeEnv,
-    // Namespaces BullMQ's Redis keys so environments sharing a Redis instance
-    // cannot consume each other's jobs. Optional: defaults per NODE_ENV.
     queuePrefix: process.env.QUEUE_PREFIX || `bull:${nodeEnv}`,
     gcp_bucket_name: getEnv("GCP_BUCKET_NAME"),
     gcp_client_email: getEnv("GCP_CLIENT_EMAIL"),
