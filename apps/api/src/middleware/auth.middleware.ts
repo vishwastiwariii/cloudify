@@ -4,7 +4,7 @@ import { AuthService, AuthError } from "../modules/auth/auth.service"
 
 const authService = new AuthService()
 
-export async function authMiddleware (req: Request, _res: Response, next: NextFunction) {
+export async function authMiddleware (req: Request, res: Response, next: NextFunction) {
     try {
         const token = req.cookies?.[AUTH_COOKIE_NAME]
 
@@ -18,6 +18,10 @@ export async function authMiddleware (req: Request, _res: Response, next: NextFu
 
         next()
     } catch (error: any) {
-        next(error)
+        return res.status(401).json({
+            success: false, 
+            error: error, 
+            message: "Invalid or expired session"
+        })
     }
 }

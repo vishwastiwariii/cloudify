@@ -1,5 +1,5 @@
 import prisma from '@repo/db'
-import type { CreateFileDto, ListFileDto, MoveFileDto, RenameFileDto } from '@repo/validation'
+import type { ListFileDto, MoveFileDto, RenameFileDto } from '@repo/validation'
 import { AuthError } from '../auth/auth.service'
 
 export class FileService {
@@ -9,53 +9,6 @@ export class FileService {
             ...file,
             size: file.size.toString()
         }
-    }
-
-    async createFile(dto: CreateFileDto, userId: string) {
-        const { name, folderId, originalName, storageKey, bucket, mimeType, size, checkSum } = dto
-
-        const folder = folderId
-            ? await prisma.folder.findFirst({
-                where: {
-                    id: folderId,
-                    ownerId: userId,
-                    deletedAt: null
-                }
-            })
-            : null
-
-        if (folderId && !folder) {
-            throw new AuthError('Folder not found', 404)
-        }
-
-        const existingFile = await prisma.file.findFirst({
-            where: {
-                ownerId: userId,
-                folderId: folderId ?? null,
-                name: name,
-                deletedAt: null
-            }
-        })
-
-        if (existingFile) {
-            throw new AuthError('A file with this name already exists here', 409)
-        }
-
-        const file = await prisma.file.create({
-            data: {
-                name,
-                originalName,
-                storageKey,
-                bucket,
-                mimeType,
-                size,
-                checkSum: checkSum ?? null,
-                folderId: folderId ?? null,
-                ownerId: userId
-            }
-        })
-
-        return this.serializeFile(file)
     }
 
     async getAllFile(userId: string, query: ListFileDto['query']) {

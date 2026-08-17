@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import prisma from '@repo/db'
 import config from '../../config/env'
-import { AUTH_COOKIE_NAME, AUTH_COOKIE_OPTIONS } from './auth.constants'
+import { AUTH_COOKIE_NAME, AUTH_COOKIE_OPTIONS, clearCookie, setAuthCookie } from './auth.constants'
 
 export class AuthError extends Error {
     statusCode: number
@@ -32,14 +32,6 @@ export class AuthService {
         } catch {
             throw new AuthError('Invalid or expired token', 401)
         }
-    }
-
-    private setAuthCookies(res: Response, token: string) {
-        res.cookie(AUTH_COOKIE_NAME, token, AUTH_COOKIE_OPTIONS)
-    }
-
-    private clearAuthCookies(res: Response) {
-        res.clearCookie(AUTH_COOKIE_NAME, AUTH_COOKIE_OPTIONS)
     }
 
     private toSafeUser<T extends { password: string, storageLimit: bigint, storageUsed: bigint }>(user: T) {
@@ -73,7 +65,7 @@ export class AuthService {
         const token = this.generateAuthToken({ userId: user.id, email: user.email })
 
         if (res) {
-            this.setAuthCookies(res, token)
+            setAuthCookie(res, token)
         }
 
         return {
@@ -91,7 +83,8 @@ export class AuthService {
             }
         })
 
-        if(!user) {
+        // A soft-deleted account must not be able to obtain a fresh cookie.
+        if(!user || user.deletedAt !== null) {
             throw new AuthError('Invalid Email', 401)
         }
 
@@ -104,7 +97,7 @@ export class AuthService {
         const token = this.generateAuthToken({ userId: user.id, email: user.email })
 
         if (res) {
-            this.setAuthCookies(res, token)
+            setAuthCookie(res, token)
         }
 
         return { user: this.toSafeUser(user), token }
@@ -119,7 +112,10 @@ export class AuthService {
             }
         })
 
-        if (!user) {
+        // The token outlives the account, so deletion has to be re-checked on
+        // every request rather than trusted from the payload: without this a
+        // deleted user keeps full access until their cookie expires.
+        if (!user || user.deletedAt !== null) {
             throw new AuthError('User not found', 401)
         }
 
@@ -127,6 +123,6 @@ export class AuthService {
     }
 
     async logout(res: Response) {
-        this.clearAuthCookies(res)
+        clearCookie(res)
     }
 }

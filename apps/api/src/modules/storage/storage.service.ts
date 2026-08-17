@@ -1,4 +1,4 @@
-import prisma from '@repo/db'
+import prisma, { Prisma } from '@repo/db'
 import type { SerializedStorageUsage, StorageUsage } from './storage.types'
 import { AuthError } from '../auth/auth.service'
 
@@ -72,7 +72,14 @@ export class StorageService {
         }
     }
 
-    async incrementUsage(userId: string, bytes: bigint): Promise<void> {
+    // `client` lets a caller run this inside its own transaction, so the file
+    // row and the usage it accounts for commit or roll back together. Called
+    // without one it opens its own transaction as before.
+    async incrementUsage(
+        userId: string,
+        bytes: bigint,
+        client?: Prisma.TransactionClient
+    ): Promise<void> {
         if (bytes < 0n) {
             throw new AuthError('Storage increment cannot be negative', 400)
         }
@@ -81,42 +88,52 @@ export class StorageService {
             return
         }
 
-        await prisma.$transaction(async (tx) => {
-            const user = await tx.user.findFirst({
-                where: {
-                    id: userId,
-                    deletedAt: null
-                },
-                select: {
-                    storageLimit: true
-                }
-            })
+        if (client) {
+            return this.applyIncrement(client, userId, bytes)
+        }
 
-            if (!user) {
-                throw new AuthError('User not found', 404)
-            }
+        await prisma.$transaction((tx) => this.applyIncrement(tx, userId, bytes))
+    }
 
-            // the quota is re-checked inside the update itself, so concurrent
-            // uploads can never both pass a stale checkQuota and overshoot
-            const result = await tx.user.updateMany({
-                where: {
-                    id: userId,
-                    deletedAt: null,
-                    storageUsed: {
-                        lte: user.storageLimit - bytes
-                    }
-                },
-                data: {
-                    storageUsed: {
-                        increment: bytes
-                    }
-                }
-            })
-
-            if (result.count === 0) {
-                throw new AuthError('Storage limit exceeded', 413)
+    private async applyIncrement(
+        client: Prisma.TransactionClient,
+        userId: string,
+        bytes: bigint
+    ): Promise<void> {
+        const user = await client.user.findFirst({
+            where: {
+                id: userId,
+                deletedAt: null
+            },
+            select: {
+                storageLimit: true
             }
         })
+
+        if (!user) {
+            throw new AuthError('User not found', 404)
+        }
+
+        // the quota is re-checked inside the update itself, so concurrent
+        // uploads can never both pass a stale checkQuota and overshoot
+        const result = await client.user.updateMany({
+            where: {
+                id: userId,
+                deletedAt: null,
+                storageUsed: {
+                    lte: user.storageLimit - bytes
+                }
+            },
+            data: {
+                storageUsed: {
+                    increment: bytes
+                }
+            }
+        })
+
+        if (result.count === 0) {
+            throw new AuthError('Storage limit exceeded', 413)
+        }
     }
 
     async decrementUsage(userId: string, bytes: bigint): Promise<void> {

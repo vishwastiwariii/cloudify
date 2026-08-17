@@ -5,8 +5,10 @@ import path from "path";
 import { randomUUID } from "crypto";
 import { storageProvider } from "../../infrastructure/storage";
 import { AuthError } from "../auth/auth.service";
+import { StorageService } from "../storage/storage.service";
 import { SIGNED_UPLOAD_URL_EXPIRATION, UPLOAD_SESSION_EXPIRATION } from "./uploads.constants";
 
+const storageService = new StorageService()
 
 export class UploadService {
 
@@ -14,6 +16,11 @@ export class UploadService {
         if(data.folderId) {
             await this.validateFolder(userId, data.folderId)
         }
+
+        // Rejected here so an over-quota upload never gets a signed URL. This is
+        // the early check, not the enforcement: several sessions opened at once
+        // can each pass it, and completeUpload is what actually holds the line.
+        await storageService.checkQuota(userId, BigInt(data.size))
 
         const objectKey = this.generateObjectKey(userId, data.fileName)
 
@@ -70,8 +77,11 @@ export class UploadService {
             throw new AuthError("Size does not match", 409)
         }
 
-        const [file] = await prisma.$transaction([
-            prisma.file.create({
+        // One transaction so the row, the session and the usage move together:
+        // a file that exists without being charged for is a quota bypass, and a
+        // charge without a file is storage the user can never reclaim.
+        const file = await prisma.$transaction(async (tx) => {
+            const created = await tx.file.create({
                 data: {
                     ownerId: userId,
                     folderId: uploadSession.folderId,
@@ -82,8 +92,9 @@ export class UploadService {
                     mimeType: metadata.contentType,
                     size: BigInt(metadata.size)
                 }
-            }),
-            prisma.uploadSession.update({
+            })
+
+            await tx.uploadSession.update({
                 where: {
                     id: uploadSession.id,
                     ownerId: userId
@@ -93,7 +104,13 @@ export class UploadService {
                     completedAt: new Date()
                 }
             })
-        ])
+
+            // Throws 413 if this upload would cross the limit, rolling back the
+            // file row with it.
+            await storageService.incrementUsage(userId, BigInt(metadata.size), tx)
+
+            return created
+        })
 
         return {
             file
