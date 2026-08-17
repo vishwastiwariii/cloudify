@@ -1,23 +1,19 @@
 import { Job } from "bullmq";
+import { UPLOAD_CLEANUP_JOB_NAME } from "../../jobs/upload-cleanup";
+import { processUploadCleanUp } from "../../jobs/upload-cleanup/upload-cleanup.processor";
 
 export async function processFileJob(
     job: Job
 ) {
-    try {
-        console.log(`Processing job: ${job.id}`)
-
-        console.log("Job Name: ", job.name)
-
-        console.log("Job Data: ", job.data)
-
-        return {
-            success: true
-        }
-    } catch (error) {
-        console.log(error)
-
-        return {
-            success: false
-        }
+    switch(job.name) {
+        case UPLOAD_CLEANUP_JOB_NAME: 
+            return processUploadCleanUp(
+                job
+            )
+        
+        default: 
+            throw new Error(
+                `Unknown job: ${job.name}`
+            )
     }
 }

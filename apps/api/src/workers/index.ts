@@ -1,4 +1,5 @@
-import { fileProcessingWorker } from "./worker"
+import { uploadCleanUpWorker } from "./upload-cleanup.worker"
+import { fileProcessingWorker } from "./file-processing.worker"
 
 let shuttingDown = false
 
@@ -18,6 +19,8 @@ async function shutDown() {
 
     try {
         await fileProcessingWorker.close()
+
+        await uploadCleanUpWorker.close()
 
         console.log("Worker closed successfully")
 
