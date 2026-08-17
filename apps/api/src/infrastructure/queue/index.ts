@@ -3,3 +3,5 @@ export { fileProcessingQueue, FILE_PROCESSING_QUEUE } from "./file-processing.qu
 export { createQueue, getQueue, closeQueues } from './queue.factory'
 
 export { uploadCleanUpQueue, UPLOAD_CLEANUP_QUEUE } from "./upload-cleanup.queue"
+
+export { gcsCleanUpQueue, GCS_CLEANUP_QUEUE } from "./gcs-cleanup.queue"

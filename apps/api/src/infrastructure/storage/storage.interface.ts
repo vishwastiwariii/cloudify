@@ -19,3 +19,25 @@ export interface ObjectMetaData {
     md5Hash?: string;
     updatedAt?: Date;
 }
+
+export interface ListObjectsOptions {
+    prefix?: string,
+    pageToken?: string,
+    maxResults?: number
+}
+
+// Trimmed down from the full object metadata: a listing returns thousands of
+// entries at a time, and a sweep only needs the key and how old it is.
+export interface ObjectSummary {
+    objectKey: string,
+    size: number,
+    createdAt?: Date,
+    updatedAt?: Date
+}
+
+export interface ListObjectsResult {
+    objects: ObjectSummary[],
+
+    // Absent once the listing is exhausted.
+    nextPageToken?: string
+}

@@ -7,8 +7,6 @@ export const UPLOAD_CLEANUP_SCHEDULER_ID = "upload-session-cleanup"
 
 export const UPLOAD_CLEANUP_INTERVAL = 60 * 60 * 1000
 
-// Sessions handled per run: bounded so a backlog can't turn one job into an
-// hour-long scan. Whatever is left over is picked up by the next run.
 export const UPLOAD_CLEANUP_BATCH_SIZE = 500
 
 export async function enqueueUploadCleanup () {

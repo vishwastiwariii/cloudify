@@ -64,32 +64,31 @@ export async function processUploadCleanUp (
     )
 
     return {
-        found: expiredSessions.length,
+        processed: expiredSessions.length,
         cleaned,
         failed
     }
 }
 
-// Object first, row second: if the delete fails the session stays PENDING and
-// the next run retries it, which is cheaper to recover from than a CANCELLED row
-// pointing at an object nobody will ever collect.
-async function cleanUpSession (
-    sessionId: string,
+
+async function cleanUpSession(
+    sessionId: string, 
     objectKey: string
 ) {
-    await storageProvider.deleteObject(objectKey)
+   try {
+        await storageProvider.deleteObject(
+            objectKey
+        )
 
-    // updateMany (not update) so the `status` guard can be part of the filter:
-    // it keeps a session that was promoted between the scan above and this write
-    // untouched, and matching nothing is a no-op rather than a P2025 throw.
-    await prisma.uploadSession.updateMany({
-        where: {
-            id: sessionId,
-            status: "PENDING"
-        },
-        data: {
-            status: "CANCELLED",
-            failureReason: "Upload session expired"
-        }
-    })
-}
+        await prisma.uploadSession.update({
+            where: {
+                id: sessionId
+            }, 
+            data: {
+                status: "EXPIRED"
+            }
+        })
+   } catch (error) {
+    throw error
+   }
+} 

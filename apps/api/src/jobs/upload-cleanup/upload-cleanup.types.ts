@@ -4,7 +4,7 @@ export interface UploadCleanUpJobData {
 
 export interface UploadCleanUpJobResult {
     // Expired sessions picked up by this run.
-    found: number
+    processed: number
 
     // Sessions whose object was removed and row marked CANCELLED.
     cleaned: number

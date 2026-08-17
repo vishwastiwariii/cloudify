@@ -11,23 +11,24 @@ vi.mock('@repo/db', () => ({
 
 import prisma from '@repo/db'
 import { UserService } from '../modules/users/user.service'
+import { USER_PUBLIC_SELECT } from '../modules/users/user.constants'
 
 const mockedFindUnique = prisma.user.findUnique as unknown as Mock
 const mockedUpdate = prisma.user.update as unknown as Mock
 
+// Mirrors what a USER_PUBLIC_SELECT query resolves to: password, verifiedAt and
+// deletedAt are never read back, so a fixture carrying them would be testing a
+// row the service cannot receive.
 function buildUser(overrides: Record<string, any> = {}) {
     return {
         id: 'user-1',
         email: 'test@example.com',
         username: null,
-        password: 'hashed-password',
         name: 'Test User',
         avatar: null,
         isVerified: true,
-        verifiedAt: null,
         storageLimit: 2147483648n,
         storageUsed: 0n,
-        deletedAt: null,
         createdAt: new Date('2026-01-01'),
         updatedAt: new Date('2026-01-01'),
         ...overrides,
@@ -58,13 +59,17 @@ describe('UserService', () => {
 
             const result = await userService.getMe('user-1')
 
+            // The select is what keeps `password` out of the response, so that
+            // is the thing worth pinning: nothing in the service strips it.
             expect(mockedFindUnique).toHaveBeenCalledWith(
-                expect.objectContaining({ where: { id: 'user-1' } })
+                expect.objectContaining({
+                    where: { id: 'user-1' },
+                    select: USER_PUBLIC_SELECT,
+                })
             )
             expect(result).toMatchObject({ id: 'user-1', email: 'test@example.com', name: 'Test User' })
             expect(result.storageLimit).toBe('2147483648')
             expect(result.storageUsed).toBe('0')
-            expect(result).not.toHaveProperty('password')
         })
     })
 
@@ -78,11 +83,11 @@ describe('UserService', () => {
                 expect.objectContaining({
                     where: { id: 'user-1' },
                     data: { name: 'New Name' },
+                    select: USER_PUBLIC_SELECT,
                 })
             )
             expect(result.name).toBe('New Name')
             expect(result.storageLimit).toBe('2147483648')
-            expect(result).not.toHaveProperty('password')
         })
     })
 
@@ -96,11 +101,11 @@ describe('UserService', () => {
                 expect.objectContaining({
                     where: { id: 'user-1' },
                     data: { avatar: 'https://cdn.example.com/avatar.png' },
+                    select: USER_PUBLIC_SELECT,
                 })
             )
             expect(result.avatar).toBe('https://cdn.example.com/avatar.png')
             expect(result.storageUsed).toBe('0')
-            expect(result).not.toHaveProperty('password')
         })
     })
 })

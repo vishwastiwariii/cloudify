@@ -2,12 +2,15 @@ import "../config/env"
 import prisma from "@repo/db"
 import { uploadCleanUpWorker } from "./upload-cleanup.worker"
 import { fileProcessingWorker } from "./file-processing.worker"
+import { gcsCleanUpWorker } from "./gcs-cleanup.worker"
 import { registerUploadCleanUpScheduler } from "../jobs/upload-cleanup/scheduler"
+import { registerGcsCleanUpScheduler } from "../jobs/gcs-cleanup/scheduler"
 import { closeQueues } from "../infrastructure/queue"
 
 const workers = [
     fileProcessingWorker,
-    uploadCleanUpWorker
+    uploadCleanUpWorker,
+    gcsCleanUpWorker
 ]
 
 let shuttingDown = false
@@ -25,6 +28,8 @@ async function startWorkers() {
     )
 
     await registerUploadCleanUpScheduler()
+
+    await registerGcsCleanUpScheduler()
 
     console.log(
         "Cloudify workers started"
