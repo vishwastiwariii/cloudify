@@ -8,4 +8,5 @@ enum UploadStatus {
     FAILED
     COMPLETED 
     CANCELLED
+    EXPIRED
 }
