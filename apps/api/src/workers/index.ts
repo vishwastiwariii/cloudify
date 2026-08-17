@@ -5,12 +5,15 @@ import { fileProcessingWorker } from "./file-processing.worker"
 import { gcsCleanUpWorker } from "./gcs-cleanup.worker"
 import { registerUploadCleanUpScheduler } from "../jobs/upload-cleanup/scheduler"
 import { registerGcsCleanUpScheduler } from "../jobs/gcs-cleanup/scheduler"
+import { registerFileMetaDataScheduler } from "../jobs/file-metadata/scheduler"
 import { closeQueues } from "../infrastructure/queue"
+import { fileMetaDataWorker } from "./file-metadata.worker"
 
 const workers = [
     fileProcessingWorker,
     uploadCleanUpWorker,
-    gcsCleanUpWorker
+    gcsCleanUpWorker,
+    fileMetaDataWorker
 ]
 
 let shuttingDown = false
@@ -30,6 +33,8 @@ async function startWorkers() {
     await registerUploadCleanUpScheduler()
 
     await registerGcsCleanUpScheduler()
+
+    await registerFileMetaDataScheduler()
 
     console.log(
         "Cloudify workers started"

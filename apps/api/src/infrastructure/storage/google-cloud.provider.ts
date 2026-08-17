@@ -68,6 +68,19 @@ export class GoogleStorageProvider {
         }
     }
 
+    // Pulls the object into memory, so callers must bound what they ask for:
+    // this is for inspecting small files, not for serving downloads (those go
+    // through a signed URL and never touch the API process).
+    async downloadObject (
+        objectKey: string
+    ): Promise<Buffer> {
+        const file = bucket.file(objectKey)
+
+        const [contents] = await file.download()
+
+        return contents
+    }
+
     async listObjects (
         options: ListObjectsOptions = {}
     ): Promise<ListObjectsResult> {
