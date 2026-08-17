@@ -1,18 +1,23 @@
 import { Worker } from "bullmq";
-import { UPLOAD_CLEANUP_JOB_NAME } from "../jobs/upload-cleanup";
-import { processUploadCleanUp } from "../jobs/upload-cleanup/upload-cleanup.processor";
+import { UPLOAD_CLEANUP_QUEUE } from "../infrastructure/queue";
+import { processUploadCleanUpJob } from "./processor/upload-cleanup.processor";
+import type { UploadCleanUpJobData } from "../jobs/upload-cleanup/upload-cleanup.types";
 import { redisConfig } from "../infrastructure/redis/redis.config";
 import config from "../config/env";
 
-export const uploadCleanUpWorker = new Worker(
-    UPLOAD_CLEANUP_JOB_NAME, 
-    processUploadCleanUp, 
+export const uploadCleanUpWorker = new Worker<UploadCleanUpJobData>(
+    UPLOAD_CLEANUP_QUEUE,
+
+    processUploadCleanUpJob,
+
     {
-        connection: redisConfig, 
+        connection: redisConfig,
 
         prefix: config.queuePrefix,
 
-        concurrency: 5
+        // The scheduled cleanup is one full scan of the expired sessions:
+        // parallel copies of it would only fight over the same rows.
+        concurrency: 1
     }
 )
 
@@ -24,19 +29,19 @@ uploadCleanUpWorker.on(
 
 uploadCleanUpWorker.on(
     "active", (job) => {
-        console.log(`${job.id} is created`)
+        console.log(`Job ${job.id} is active`)
     }
 )
 
 uploadCleanUpWorker.on(
     "completed", (job) => {
-        console.log(`Job: ${job.id} is completed`)
+        console.log(`Job ${job.id} is completed`)
     }
 )
 
 uploadCleanUpWorker.on(
-    "failed", (job) => {
-        console.log(`${job?.id} is failed`)
+    "failed", (job, error) => {
+        console.error(`Job ${job?.id} failed: `, error)
     }
 )
 

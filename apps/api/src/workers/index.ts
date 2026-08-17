@@ -1,5 +1,14 @@
+import "../config/env"
+import prisma from "@repo/db"
 import { uploadCleanUpWorker } from "./upload-cleanup.worker"
 import { fileProcessingWorker } from "./file-processing.worker"
+import { registerUploadCleanUpScheduler } from "../jobs/upload-cleanup/scheduler"
+import { closeQueues } from "../infrastructure/queue"
+
+const workers = [
+    fileProcessingWorker,
+    uploadCleanUpWorker
+]
 
 let shuttingDown = false
 
@@ -7,10 +16,25 @@ console.log(
     "Cloudify worker process started"
 )
 
+async function startWorkers() {
+    await prisma.$queryRaw`SELECT 1`
+    console.log("Prisma connected to database successfully")
 
-async function shutDown() {
+    await Promise.all(
+        workers.map((worker) => worker.waitUntilReady())
+    )
+
+    await registerUploadCleanUpScheduler()
+
+    console.log(
+        "Cloudify workers started"
+    )
+}
+
+
+async function shutDown(exitCode = 0) {
     if(shuttingDown) {
-        return 
+        return
     }
 
     shuttingDown = true
@@ -18,13 +42,20 @@ async function shutDown() {
     console.log("Worker shutdown started")
 
     try {
-        await fileProcessingWorker.close()
+       
+        await Promise.all(
+            workers.map((worker) => worker.close())
+        )
+        console.log("Workers closed successfully")
 
-        await uploadCleanUpWorker.close()
+        // The scheduler registration opens the cleanup queue in this process too.
+        await closeQueues()
+        console.log("Queues closed")
 
-        console.log("Worker closed successfully")
+        await prisma.$disconnect()
+        console.log("Prisma disconnected")
 
-        process.exit(0)
+        process.exit(exitCode)
     } catch (error) {
         console.error("Worker shutdown failed: ", error)
 
@@ -33,11 +64,19 @@ async function shutDown() {
 }
 
 process.on(
-    'SIGTERM', 
-    shutDown
+    'SIGTERM',
+    () => shutDown()
 )
 
 process.on(
     'SIGINT',
-    shutDown
+    () => shutDown()
+)
+
+startWorkers().catch(
+    async (error) => {
+        console.error("Failed to start workers", error)
+
+        await shutDown(1)
+    }
 )

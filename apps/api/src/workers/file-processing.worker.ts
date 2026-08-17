@@ -28,7 +28,7 @@ fileProcessingWorker.on(
 
 fileProcessingWorker.on(
     "active", (job) => {
-        console.log(`${job.id} is created`)
+        console.log(`Job ${job.id} is active`)
     }
 )
 
@@ -39,8 +39,8 @@ fileProcessingWorker.on(
 )
 
 fileProcessingWorker.on(
-    "failed", (job) => {
-        console.log(`Job ${job?.id} is failed`)
+    "failed", (job, error) => {
+        console.error(`Job ${job?.id} failed: `, error)
     }
 )
 

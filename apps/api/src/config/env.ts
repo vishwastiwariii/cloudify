@@ -73,7 +73,9 @@ const config: Config = {
     queuePrefix: process.env.QUEUE_PREFIX || `bull:${nodeEnv}`,
     gcp_bucket_name: getEnv("GCP_BUCKET_NAME"),
     gcp_client_email: getEnv("GCP_CLIENT_EMAIL"),
-    gcp_private_key: getEnv("GCP_PRIVATE_KEY"), 
+    // A PEM key survives a single-line .env only as literal "\n" escapes, which
+    // the crypto layer rejects with an opaque DECODER error.
+    gcp_private_key: getEnv("GCP_PRIVATE_KEY").replace(/\\n/g, "\n"),
     gcp_project_id: getEnv("GCP_PROJECT_ID")
 }
 
