@@ -1,13 +1,25 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "tailwindcss";
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@theme {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --color-cream: #f5efe2;
+  --color-cream-light: #faf6ec;
+  --color-card: #fbf8ef;
+  --color-ink: #1c1712;
+  --color-ink-muted: #665f54;
+  --color-rust: #b3492a;
+  --color-rust-dark: #963c22;
+  --color-rust-tint: #f4e2da;
+  --color-gold: #f0d34e;
+  --color-gold-soft: #f6e29a;
+  --color-line: #e6ddc9;
+
+  --color-band: #ece5d3;
+  --color-swatch-sand: #ddd5c0;
+  --color-swatch-tan: #e6cd9c;
+  --color-swatch-stone: #c9c2b1;
 }
 
 html,
@@ -17,34 +29,10 @@ body {
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  background: var(--color-cream);
+  color: var(--color-ink);
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.imgDark {
-  display: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-
-  .imgLight {
-    display: none;
-  }
-  .imgDark {
-    display: unset;
-  }
+.font-display {
+  font-family: var(--font-fraunces), ui-serif, serif;
 }
