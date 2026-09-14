@@ -1,15 +1,18 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from "react";
 
-type Variant = "rust" | "dark" | "outline" | "pill";
+type Variant = "dark" | "rust" | "rust-to-gold" | "outline" | "ghost";
 
 const baseClasses =
-  "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold transition-colors whitespace-nowrap";
+  "inline-flex items-center justify-center gap-2.5 rounded-full px-[30px] py-4 text-[17px] font-semibold whitespace-nowrap transition-all duration-200";
 
 const variantClasses: Record<Variant, string> = {
-  rust: "bg-rust text-white hover:bg-rust-dark",
-  dark: "bg-ink text-white hover:bg-ink/90",
-  outline: "bg-cream-light text-ink border border-ink/15 hover:bg-white",
-  pill: "bg-white text-ink hover:bg-neutral-100",
+  dark: "bg-ink text-paper shadow-[0_10px_22px_-12px_rgba(20,18,14,0.7)] hover:bg-rust",
+  rust: "bg-rust text-paper shadow-[0_18px_36px_-18px_rgba(178,60,11,0.85)] hover:bg-ink hover:-translate-y-0.5",
+  "rust-to-gold":
+    "bg-rust text-paper hover:bg-gold hover:text-ink hover:-translate-y-0.5",
+  outline:
+    "bg-paper text-ink border border-[#dcd3c0] hover:border-ink hover:-translate-y-0.5",
+  ghost: "border border-[#4b4335] text-paper hover:border-paper hover:-translate-y-0.5",
 };
 
 type ButtonProps = {
@@ -31,11 +34,7 @@ export function Button({
 
   if (href) {
     return (
-      <a
-        href={href}
-        className={classes}
-        {...(props as AnchorHTMLAttributes<HTMLAnchorElement>)}
-      >
+      <a href={href} className={classes} {...(props as AnchorHTMLAttributes<HTMLAnchorElement>)}>
         {children}
       </a>
     );

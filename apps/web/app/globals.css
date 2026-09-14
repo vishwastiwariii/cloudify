@@ -1,31 +1,29 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-sans: var(--font-familjen-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-young-serif), ui-serif, serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
 
-  --color-cream: #f5efe2;
-  --color-cream-light: #faf6ec;
-  --color-card: #fbf8ef;
-  --color-ink: #1c1712;
-  --color-ink-muted: #665f54;
-  --color-rust: #b3492a;
-  --color-rust-dark: #963c22;
-  --color-rust-tint: #f4e2da;
-  --color-gold: #f0d34e;
-  --color-gold-soft: #f6e29a;
-  --color-line: #e6ddc9;
-
-  --color-band: #ece5d3;
-  --color-swatch-sand: #ddd5c0;
-  --color-swatch-tan: #e6cd9c;
-  --color-swatch-stone: #c9c2b1;
+  --color-cream: #f4f0e6;
+  --color-band: #efe9db;
+  --color-paper: #fffcf5;
+  --color-paper-soft: #f7f1e2;
+  --color-paper-warm: #fbf6ea;
+  --color-tint: #f4eddc;
+  --color-ink: #14120e;
+  --color-ink-soft: #3d372c;
+  --color-ink-muted: #5c5445;
+  --color-rust: #b23c0b;
+  --color-gold: #f5d547;
+  --color-line: #e3dbc8;
+  --color-stone: #e7dfcb;
 }
 
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
@@ -33,6 +31,6 @@ body {
   color: var(--color-ink);
 }
 
-.font-display {
-  font-family: var(--font-fraunces), ui-serif, serif;
+a {
+  color: inherit;
 }

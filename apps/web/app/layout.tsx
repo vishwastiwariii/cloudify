@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
-import { Fraunces } from "next/font/google";
+import { Young_Serif, Familjen_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-});
-const fraunces = Fraunces({
+const youngSerif = Young_Serif({
   subsets: ["latin"],
-  weight: ["600", "700"],
-  style: ["normal"],
-  variable: "--font-fraunces",
+  weight: "400",
+  variable: "--font-young-serif",
+});
+const familjenGrotesk = Familjen_Grotesk({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-familjen-grotesk",
+});
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-jetbrains-mono",
 });
 
 export const metadata: Metadata = {
@@ -30,12 +30,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} font-sans antialiased`}
-      >
-        {children}
-      </body>
+    <html
+      lang="en"
+      className={`${youngSerif.variable} ${familjenGrotesk.variable} ${jetbrainsMono.variable}`}
+    >
+      <body className="font-sans antialiased">{children}</body>
     </html>
   );
 }
