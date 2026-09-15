@@ -20,17 +20,19 @@
   --color-stone: #e7dfcb;
 }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: clip;
-}
+@layer base {
+  html,
+  body {
+    max-width: 100vw;
+    overflow-x: clip;
+  }
 
-body {
-  background: var(--color-cream);
-  color: var(--color-ink);
-}
+  body {
+    background: var(--color-cream);
+    color: var(--color-ink);
+  }
 
-a {
-  color: inherit;
+  a {
+    color: inherit;
+  }
 }

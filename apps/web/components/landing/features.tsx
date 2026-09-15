@@ -11,7 +11,7 @@ type Feature = {
 
 const FEATURES: Feature[] = [
   {
-    title: "5 GB, free forever",
+    title: "2 GB, free forever",
     body: "Enough for a full client delivery. No trial clock, no card, no drip of upgrade nags.",
     cardClass: "border border-[#ede5d2] bg-paper",
     iconClass: "bg-gold",

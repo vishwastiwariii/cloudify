@@ -5,7 +5,6 @@ const FOOTER_LINKS = [
   { label: "Sharing", href: "#sharing" },
   { label: "Features", href: "#features" },
   { label: "FAQ", href: "#faq" },
-  { label: "Security", href: "/security" },
 ];
 
 export function Footer() {

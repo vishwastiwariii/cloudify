@@ -46,7 +46,7 @@ export function Navbar() {
             Log in
           </Link>
           <Button href="/signup" variant="dark" className="px-5 py-2.5 text-[15px]">
-            Get 5GB free
+            Get 2GB free
             <ArrowRightIcon className="h-3.5 w-3.5" />
           </Button>
         </div>

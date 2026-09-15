@@ -12,7 +12,7 @@ type FileRow = {
 const TABS = ["Client delivery", "Brand assets", "Contracts"];
 
 const FILES: FileRow[] = [
-  { name: "Stills — 24 photos", meta: "1.2 GB · shared", emphasis: true, link: true },
+  { name: "Stills — 24 photos", meta: "620 MB · shared", emphasis: true, link: true },
   { name: "Final-cut-v4.mp4", meta: "842 MB" },
   { name: "Logo-pack.zip", meta: "18 MB" },
 ];
@@ -37,10 +37,10 @@ export function HeroPreviewCard() {
             Workspace / Client delivery
           </p>
           <p className="mt-2.5 font-display text-[34px] leading-none text-ink">
-            4.1 <span className="text-xl text-ink-muted">of 5 GB</span>
+            1.6 <span className="text-xl text-ink-muted">of 2 GB</span>
           </p>
           <div className="mx-auto mt-3.5 h-2.5 w-full max-w-[260px] overflow-hidden rounded-full bg-[#eae1cd]">
-            <div className="h-full w-[82%] rounded-full bg-rust" />
+            <div className="h-full w-[80%] rounded-full bg-rust" />
           </div>
         </div>
 

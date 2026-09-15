@@ -23,14 +23,14 @@ export function Hero() {
           </h1>
 
           <p className="mt-6 max-w-[500px] text-[19px] leading-[1.62] text-ink-soft">
-            Cloudify gives every person 5GB of encrypted space on Google Cloud. Organise your work
+            Cloudify gives every person 2GB of encrypted space on Google Cloud. Organise your work
             into real folders, then hand any file or folder to a client with one link. They
             don&apos;t need an account. You can take it back whenever you like.
           </p>
 
           <div className="mt-[34px] flex flex-wrap gap-3.5">
             <Button href="/signup" variant="rust">
-              Get 5GB free
+              Get 2GB free
               <ArrowRightIcon className="h-[15px] w-[15px]" />
             </Button>
             <Button href="#sharing" variant="outline">

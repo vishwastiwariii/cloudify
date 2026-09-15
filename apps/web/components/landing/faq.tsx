@@ -5,8 +5,8 @@ import { Eyebrow } from "@/components/ui/eyebrow";
 
 const FAQS = [
   {
-    q: "Is 5GB really free?",
-    a: "Yes. Every account gets 5GB at no cost and it doesn't expire. If you outgrow it you can add more, but nothing you've already stored gets locked behind a paywall.",
+    q: "Is 2GB really free?",
+    a: "Yes. Every account gets 2GB at no cost and it doesn't expire. If you outgrow it you can add more, but nothing you've already stored gets locked behind a paywall.",
   },
   {
     q: "Do recipients need an account?",

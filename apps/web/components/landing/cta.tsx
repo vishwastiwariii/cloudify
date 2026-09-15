@@ -14,7 +14,7 @@ export function Cta() {
         <div className="relative px-7 py-13 text-center sm:px-18 sm:py-21">
           <p className="mb-5 font-mono text-[11px] uppercase tracking-[0.16em] text-gold">Start now</p>
           <h2 className="mx-auto max-w-[760px] font-display text-[clamp(34px,5vw,60px)] leading-[1.04] tracking-[-0.02em]">
-            5 GB, encrypted, yours in <Highlight className="text-ink">a minute.</Highlight>
+            2 GB, encrypted, yours in <Highlight className="text-ink">a minute.</Highlight>
           </h2>
           <p className="mx-auto mt-6 max-w-[460px] text-[17px] leading-relaxed text-[#e4ddcd]">
             Make an account, drag in your first folder, send the link. That&apos;s the whole
@@ -22,7 +22,7 @@ export function Cta() {
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3.5">
             <Button href="/signup" variant="rust-to-gold">
-              Get 5GB free
+              Get 2GB free
               <ArrowRightIcon className="h-[15px] w-[15px]" />
             </Button>
             <Button href="/login" variant="ghost">

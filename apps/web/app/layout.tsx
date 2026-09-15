@@ -21,7 +21,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Cloudify — Cloud storage for the handover",
   description:
-    "Cloudify gives every person 5GB of encrypted space on Google Cloud. Organise your work into real folders, then hand any file or folder to a client with one link.",
+    "Cloudify gives every person 2GB of encrypted space on Google Cloud. Organise your work into real folders, then hand any file or folder to a client with one link.",
 };
 
 export default function RootLayout({
