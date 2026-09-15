@@ -48,7 +48,8 @@ export class DownloadService {
 
         const downloadUrl = await storageProvider.generateSignedDownloadUrl({
             objectKey: file.storageKey,
-            expiresIn: DOWNLOAD_URL_EXPIRATION
+            expiresIn: DOWNLOAD_URL_EXPIRATION,
+            fileName: file.name
         })
 
         const expiresAt = new Date(

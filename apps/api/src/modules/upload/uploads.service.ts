@@ -113,7 +113,10 @@ export class UploadService {
         })
 
         return {
-            file
+            file: {
+                ...file,
+                size: file.size.toString()
+            }
         }
     }
 

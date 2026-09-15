@@ -66,6 +66,7 @@ function buildSharedFile(overrides: Record<string, any> = {}) {
         ...buildShare(overrides),
         file: {
             id: 'file-1',
+            name: 'file-1.txt',
             storageKey: 'users/user-1/2026/01/file-1.txt',
             deletedAt: null,
             ...(overrides.file ?? {}),
@@ -223,6 +224,7 @@ describe('ShareService', () => {
             expect(mockedSignedUrl).toHaveBeenCalledWith({
                 objectKey: 'users/user-1/2026/01/file-1.txt',
                 expiresIn: PUBLIC_SHARE_DOWNLOAD_URL_EXPIRATION,
+                fileName: 'file-1.txt',
             })
         })
 

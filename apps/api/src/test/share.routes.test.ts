@@ -236,6 +236,7 @@ describe('GET|POST /share/:token', () => {
             ...buildShare(overrides),
             file: {
                 id: FILE_ID,
+                name: 'file.txt',
                 storageKey: 'users/user-1/2026/01/file.txt',
                 deletedAt: null,
                 ...(overrides.file ?? {}),

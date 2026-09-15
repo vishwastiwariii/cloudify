@@ -7,8 +7,12 @@ export interface GenerateSignedUploadUrlOptions {
 }
 
 export interface GenerateSignedDownloadUrlOptions {
-    objectKey: string, 
-    expiresIn?: number
+    objectKey: string,
+    expiresIn?: number,
+
+    // When set, the URL downloads the object under this name instead of
+    // letting the browser render it inline.
+    fileName?: string
 }
 
 export interface ObjectMetaData {

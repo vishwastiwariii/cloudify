@@ -163,6 +163,7 @@ export class ShareService {
                 file: {
                     select: {
                         id: true,
+                        name: true,
                         storageKey: true,
                         deletedAt: true
                     }
@@ -215,7 +216,8 @@ export class ShareService {
 
         const downloadUrl = await storageProvider.generateSignedDownloadUrl({
             objectKey: share.file.storageKey,
-            expiresIn: PUBLIC_SHARE_DOWNLOAD_URL_EXPIRATION
+            expiresIn: PUBLIC_SHARE_DOWNLOAD_URL_EXPIRATION,
+            fileName: share.file.name
         })
 
         const expiresAt = new Date(

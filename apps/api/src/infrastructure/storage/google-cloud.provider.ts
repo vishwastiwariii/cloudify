@@ -2,6 +2,20 @@ import type { GetFilesOptions, GetSignedUrlConfig } from "@google-cloud/storage"
 import { bucket } from "./storage";
 import type { GenerateSignedDownloadUrlOptions, GenerateSignedUploadUrlOptions, ListObjectsOptions, ListObjectsResult, ObjectMetaData } from "./storage.interface";
 
+// filename= is an ASCII-only fallback for older clients, filename* carries the
+// real UTF-8 name (RFC 6266). Quotes, backslashes and control characters are
+// replaced so a user-chosen name can't break out of the header value.
+function attachmentDisposition(fileName: string): string {
+    const fallback = fileName.replace(/[^\x20-\x7e]|["\\]/g, "_")
+
+    const encoded = encodeURIComponent(fileName).replace(
+        /['()*]/g,
+        (char) => `%${char.charCodeAt(0).toString(16).toUpperCase()}`
+    )
+
+    return `attachment; filename="${fallback}"; filename*=UTF-8''${encoded}`
+}
+
 
 export class GoogleStorageProvider {
 
@@ -29,9 +43,15 @@ export class GoogleStorageProvider {
         const file = bucket.file(options.objectKey)
 
         const config : GetSignedUrlConfig = {
-            version: "v4", 
-            action: "read", 
-            expires: Date.now() + (options.expiresIn ?? 15 * 60 * 1000)
+            version: "v4",
+            action: "read",
+            expires: Date.now() + (options.expiresIn ?? 15 * 60 * 1000),
+            // GCS otherwise serves the object inline, so anything the browser can
+            // render (images, PDFs, text) opens in a tab instead of downloading.
+            // It is part of the signature, so the client can't strip it.
+            ...(options.fileName !== undefined && {
+                responseDisposition: attachmentDisposition(options.fileName)
+            })
         }
 
         const [url] = await file.getSignedUrl(config)
