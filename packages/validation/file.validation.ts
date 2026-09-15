@@ -1,16 +1,8 @@
 import { z } from 'zod'
 
-export const createFileSchema = z.object({
-    name: z.string().trim().min(1).max(255),
-    originalName: z.string().trim().min(1).max(255),
-    folderId: z.string().cuid().optional(),
-    storageKey: z.string().trim().min(1),
-    bucket: z.string().trim().min(1),
-    mimeType: z.string().trim().min(1),
-    size: z.coerce.bigint().positive(),
-    checkSum: z.string().trim().optional()
-})
-
+// There is deliberately no createFileSchema: a client must never be able to
+// name the storage object a file row points at. File rows come from the upload
+// flow, which derives the key server-side.
 export const fileIdParamsSchema = z.object({
     fileId: z.string().cuid()
 })
@@ -46,7 +38,6 @@ export const deleteFileSchema = z.object({
     params: fileIdParamsSchema
 })
 
-export type CreateFileDto = z.infer<typeof createFileSchema>
 export type GetFileDto = z.infer<typeof getFileSchema>
 export type ListFileDto = z.infer<typeof listFileSchema>
 export type RenameFileDto = z.infer<typeof renameFileSchema>

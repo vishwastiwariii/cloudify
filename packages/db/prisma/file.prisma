@@ -21,6 +21,8 @@ model File {
 
     publicShare     PublicShare?
 
+    metaData        Json?
+
     deletedAt       DateTime?
 
     createdAt       DateTime    @default(now())

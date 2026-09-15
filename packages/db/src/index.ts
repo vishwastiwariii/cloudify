@@ -1,6 +1,10 @@
 import dotenv from 'dotenv'
-import { PrismaClient } from '../generated/prisma/client'
+import { PrismaClient, Prisma } from '../generated/prisma/client'
 import { PrismaPg } from "@prisma/adapter-pg"
+
+// Re-exported so consumers can reach the JSON sentinels (Prisma.DbNull) and
+// input types without importing out of the generated directory themselves.
+export { Prisma }
 
 // Loaded here, not left to the consumer: the connection string is read once when
 // this module is evaluated, so an app that happens to reach `@repo/db` before its
