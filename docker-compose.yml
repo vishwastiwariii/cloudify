@@ -57,8 +57,22 @@ services:
       environment: 
         NODE_ENV: development
       
-    web: 
-      build: 
+    worker:
+      build:
+        context: .
+        dockerfile: apps/api/Dockerfile
+      command: ["pnpm", "--filter", "api", "worker"]
+      volumes:
+        - .:/app
+        - /app/node_modules
+      depends_on:
+        - postgres
+        - redis
+      environment:
+        NODE_ENV: development
+
+    web:
+      build:
         context: .
         dockerfile: apps/web/Dockerfile
       ports: 
