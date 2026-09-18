@@ -1,5 +1,11 @@
 import dotenv from 'dotenv'
-dotenv.config({ quiet: true })
+
+// No hosting platform injects env vars for us on a bare EC2 box, so pick the
+// file by NODE_ENV (set by pm2's ecosystem config before this module loads).
+dotenv.config({
+    path: process.env.NODE_ENV === 'production' ? '.env.production.local' : '.env',
+    quiet: true
+})
 
 interface Config {
     node_env: string
@@ -8,12 +14,6 @@ interface Config {
         refreshSecret: string
     }
     redisUrl: string
-    smtp: {
-        host: string
-        port: number
-        user: string
-        pass: string
-    }
     clientUrl: string,
     port: number,
     queuePrefix: string,
@@ -27,10 +27,6 @@ const REQUIRED = [
     "JWT_SECRET", 
     "JWT_REFRESH_SECRET",
     "REDIS_URL",
-    "SMTP_HOST",
-    "SMTP_PORT",
-    "SMTP_USER",
-    "SMTP_PASS",
     "CLIENT_URL", 
     "PORT", 
     "NODE_ENV",
@@ -61,12 +57,6 @@ const config: Config = {
         refreshSecret: getEnv("JWT_REFRESH_SECRET"),
     },
     redisUrl: getEnv("REDIS_URL"),
-    smtp: {
-        host: getEnv("SMTP_HOST"),
-        port: Number(getEnv("SMTP_PORT")),
-        user: getEnv("SMTP_USER"),
-        pass: getEnv("SMTP_PASS"),
-    },
     clientUrl: getEnv("CLIENT_URL"),
     port: Number(getEnv("PORT")),
     node_env: nodeEnv,
