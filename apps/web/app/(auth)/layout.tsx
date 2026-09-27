@@ -2,8 +2,8 @@ import Link from "next/link";
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="grid min-h-screen [grid-template-columns:repeat(auto-fit,minmax(340px,1fr))]">
-      <div className="relative flex flex-col justify-between gap-12 overflow-hidden bg-band px-10 pt-11 pb-14">
+    <div className="grid min-h-screen [grid-template-columns:repeat(auto-fit,minmax(min(340px,100%),1fr))]">
+      <div className="relative flex flex-col justify-between gap-12 overflow-hidden bg-band px-6 pt-8 pb-10 sm:px-10 sm:pt-11 sm:pb-14">
         <div
           className="pointer-events-none absolute -top-35 -right-30 h-105 w-105 rounded-full"
           style={{ background: "radial-gradient(circle at 40% 40%, rgba(245,213,71,0.5), rgba(239,233,219,0) 70%)" }}
@@ -25,7 +25,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
           </p>
         </div>
 
-        <div className="relative flex items-end">
+        <div className="relative hidden items-end sm:flex">
           <div className="z-0 -mr-3 w-30 rotate-[-6deg] rounded-[22px] bg-paper p-3.25 shadow-[0_24px_44px_-30px_rgba(35,26,10,0.7)]">
             <div className="h-14 rounded-[14px] bg-gold" />
             <p className="mt-2.5 font-mono text-[10px] text-ink-muted">brief.pdf</p>

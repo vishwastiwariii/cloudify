@@ -57,14 +57,14 @@ const FEATURES: Feature[] = [
 
 export function Features() {
   return (
-    <section id="features" className="px-6 pt-23">
+    <section id="features" className="px-5 pt-18 sm:px-6 sm:pt-23">
       <div className="mx-auto max-w-[1240px]">
         <Eyebrow>03 / What you get</Eyebrow>
         <h2 className="max-w-[700px] font-display text-[clamp(32px,4.4vw,52px)] leading-[1.05] tracking-[-0.015em] text-ink">
           Small enough to be free. Serious enough to trust.
         </h2>
 
-        <div className="mt-12 grid gap-4.5 [grid-template-columns:repeat(auto-fit,minmax(268px,1fr))]">
+        <div className="mt-9 grid sm:mt-12 gap-4.5 [grid-template-columns:repeat(auto-fit,minmax(min(268px,100%),1fr))]">
           {FEATURES.map((feature) => (
             <div key={feature.title} className={`rounded-[26px] p-6.5 ${feature.cardClass}`}>
               <span className={`mb-4.5 block h-11 w-10 rounded-[50%_50%_12px_12px] ${feature.iconClass}`} />

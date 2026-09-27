@@ -26,7 +26,7 @@ export default function DashboardPage() {
       </h1>
       <p className="mt-3 text-[17px] text-ink-soft">Here&apos;s what&apos;s new in your workspace.</p>
 
-      <div className="mt-7.5 grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(230px,1fr))]">
+      <div className="mt-7.5 grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr))]">
         <div className="rounded-[26px] border border-[#e9e1ce] bg-paper p-6 shadow-[0_30px_60px_-48px_rgba(35,26,10,0.7)]">
           <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-muted">Storage used</p>
           <p className="mt-3 font-display text-[34px] leading-none">
@@ -54,7 +54,7 @@ export default function DashboardPage() {
         </p>
       </button>
 
-      <div className="mt-5.5 grid gap-5.5 [grid-template-columns:repeat(auto-fit,minmax(320px,1fr))]">
+      <div className="mt-5.5 grid gap-5.5 [grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr))]">
         <div className="overflow-hidden rounded-[26px] border border-[#e9e1ce] bg-paper">
           <div className="flex items-center justify-between gap-2.5 border-b border-[#efe7d6] px-5.5 py-4.5">
             <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-muted">Recent files</p>

@@ -22,7 +22,7 @@ const STEPS: Step[] = [
     badgeClass: "bg-[#efe0ba] text-ink",
     title: "Keep it tidy",
     body: "Nest folders as deep as you like, rename, move, tag. The structure your client sees is the one you built.",
-    offsetClass: "mt-6",
+    offsetClass: "lg:mt-6",
   },
   {
     number: "3",
@@ -30,13 +30,13 @@ const STEPS: Step[] = [
     title: "Hand it over",
     body: "Send one link. It opens in any browser with no sign-up. Set an expiry, or pull it back when the job's done.",
     dark: true,
-    offsetClass: "mt-12",
+    offsetClass: "lg:mt-12",
   },
 ];
 
 export function HowItWorks() {
   return (
-    <section id="how" className="px-6 pt-21">
+    <section id="how" className="px-5 pt-16 sm:px-6 sm:pt-21">
       <div className="mx-auto max-w-[1240px]">
         <div className="flex flex-wrap items-end justify-between gap-5">
           <div>
@@ -50,7 +50,7 @@ export function HowItWorks() {
           </p>
         </div>
 
-        <div className="mt-13 grid items-start gap-6.5 [grid-template-columns:repeat(auto-fit,minmax(270px,1fr))]">
+        <div className="mt-10 grid sm:mt-13 items-start gap-6.5 [grid-template-columns:repeat(auto-fit,minmax(min(270px,100%),1fr))]">
           {STEPS.map((step) => (
             <div
               key={step.number}

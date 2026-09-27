@@ -80,7 +80,7 @@ export function PreviewModal({ file }: { file: ApiFile }) {
           </button>
         </div>
 
-        <div className="grid [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
+        <div className="grid [grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr))]">
           <div className="flex min-h-85 items-center justify-center bg-band p-7.5">
             <div
               className="flex aspect-4/3 w-full max-w-95 items-center justify-center rounded-[22px] shadow-[0_30px_60px_-34px_rgba(35,26,10,0.8)]"

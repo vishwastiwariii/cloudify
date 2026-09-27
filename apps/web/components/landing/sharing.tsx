@@ -15,8 +15,8 @@ const OPENED_BY = [
 
 export function Sharing() {
   return (
-    <section id="sharing" className="px-6 pt-23">
-      <div className="mx-auto grid max-w-[1240px] items-center gap-13 [grid-template-columns:repeat(auto-fit,minmax(310px,1fr))]">
+    <section id="sharing" className="px-5 pt-18 sm:px-6 sm:pt-23">
+      <div className="mx-auto grid max-w-[1240px] items-center gap-13 [grid-template-columns:repeat(auto-fit,minmax(min(310px,100%),1fr))]">
         <div>
           <Eyebrow>02 / Sharing</Eyebrow>
           <h2 className="font-display text-[clamp(32px,4.4vw,52px)] leading-[1.06] tracking-[-0.015em] text-ink">
@@ -45,7 +45,7 @@ export function Sharing() {
 
         <div className="relative">
           <div
-            className="absolute inset-[-16px_22px_30px_-14px] -rotate-[2.2deg] rounded-[34px] bg-[#efe7d6]"
+            className="absolute inset-[-12px_14px_30px_-6px] sm:inset-[-16px_22px_30px_-14px] -rotate-[2.2deg] rounded-[34px] bg-[#efe7d6]"
             aria-hidden="true"
           />
           <div className="relative overflow-hidden rounded-[30px] border border-line bg-paper shadow-[0_40px_76px_-46px_rgba(35,26,10,0.65)]">
@@ -54,18 +54,18 @@ export function Sharing() {
               <span className="text-rust">Live</span>
             </div>
 
-            <div className="p-6">
+            <div className="p-4.5 sm:p-6">
               <p className="mb-2.5 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-muted">
                 Anyone with the link can
               </p>
               <div className="flex gap-1.5 rounded-full bg-tint p-1.5">
-                <span className="flex-1 rounded-full bg-ink py-2.5 text-center text-[15px] font-semibold text-paper">
+                <span className="flex-1 rounded-full bg-ink py-2.5 text-center text-[14px] sm:text-[15px] font-semibold text-paper">
                   View
                 </span>
-                <span className="flex-1 rounded-full bg-paper py-2.5 text-center text-[15px] font-semibold text-ink">
+                <span className="flex-1 rounded-full bg-paper py-2.5 text-center text-[14px] sm:text-[15px] font-semibold text-ink">
                   Download
                 </span>
-                <span className="flex-1 py-2.5 text-center text-[15px] text-ink-muted">Upload</span>
+                <span className="flex-1 py-2.5 text-center text-[14px] sm:text-[15px] text-ink-muted">Upload</span>
               </div>
 
               <div className="mt-5 grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(130px,1fr))]">

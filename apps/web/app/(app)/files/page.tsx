@@ -64,7 +64,7 @@ export default function FilesRootPage() {
       </div>
 
       {folders.length > 0 && (
-        <div className="mt-6 grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))]">
+        <div className="mt-6 grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr))]">
           {folders.map((folder, i) => (
             <Link
               key={folder.id}

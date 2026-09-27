@@ -9,14 +9,14 @@ const FOOTER_LINKS = [
 
 export function Footer() {
   return (
-    <footer className="mt-20 border-t border-line px-6 py-11">
+    <footer className="mt-16 border-t border-line px-5 py-9 sm:mt-20 sm:px-6 sm:py-11">
       <div className="mx-auto flex max-w-[1240px] flex-wrap items-center justify-between gap-5.5">
         <Link href="#top" className="flex items-center gap-2.5">
           <span className="block h-5 w-5.5 rounded-[50%_50%_30%_30%/60%_60%_40%_40%] bg-rust" aria-hidden="true" />
           <span className="font-display text-xl text-ink">Cloudify</span>
         </Link>
 
-        <nav className="flex flex-wrap gap-2">
+        <nav className="-mx-3.5 flex flex-wrap gap-1 sm:mx-0 sm:gap-2">
           {FOOTER_LINKS.map((link) => (
             <a
               key={link.href}

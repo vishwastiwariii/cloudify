@@ -30,8 +30,8 @@ export function Faq() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section id="faq" className="px-6 pt-23">
-      <div className="mx-auto grid max-w-[1240px] items-start gap-11 [grid-template-columns:repeat(auto-fit,minmax(290px,1fr))]">
+    <section id="faq" className="px-5 pt-18 sm:px-6 sm:pt-23">
+      <div className="mx-auto grid max-w-[1240px] items-start gap-11 [grid-template-columns:repeat(auto-fit,minmax(min(290px,100%),1fr))]">
         <div>
           <Eyebrow>04 / Questions</Eyebrow>
           <h2 className="font-display text-[clamp(30px,4vw,46px)] leading-[1.06] tracking-[-0.015em] text-ink">
@@ -58,7 +58,7 @@ export function Faq() {
                   onClick={() => setOpenIndex(open ? null : i)}
                   className="flex w-full items-center justify-between gap-4.5 px-5.5 py-5 text-left font-display text-ink transition-colors duration-200 hover:text-rust"
                 >
-                  <span className="text-[19px]">{item.q}</span>
+                  <span className="text-[17px] sm:text-[19px]">{item.q}</span>
                   <span className="flex h-7.5 w-7.5 shrink-0 items-center justify-center rounded-full bg-tint font-mono text-base text-rust">
                     {open ? "−" : "+"}
                   </span>

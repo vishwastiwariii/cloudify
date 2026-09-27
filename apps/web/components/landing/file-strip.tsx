@@ -15,12 +15,10 @@ const FILES: FileCard[] = [
   { label: "contract.docx", rotate: "rotate-[4deg]", translate: "-translate-y-3", swatch: "bg-[#d9cfb4]" },
 ];
 
-const TRUST_NAMES = ["Northline", "Parcelly", "Hale & Co", "Fieldnote"];
-
 export function FileStrip() {
   return (
-    <section className="pt-19">
-      <div className="relative overflow-hidden bg-band py-11">
+    <section className="pt-14 sm:pt-19">
+      <div className="relative overflow-hidden bg-band py-9 sm:py-11">
         <svg
           viewBox="0 0 1200 120"
           preserveAspectRatio="none"
@@ -37,7 +35,7 @@ export function FileStrip() {
           />
         </svg>
 
-        <div className="relative flex flex-wrap items-center justify-center px-3">
+        <div className="relative flex items-center justify-center px-3 max-sm:scale-[0.8] sm:flex-wrap">
           {FILES.map((file) =>
             file.dark ? (
               <div
@@ -59,20 +57,6 @@ export function FileStrip() {
           )}
         </div>
 
-        <div className="relative mx-auto mt-10 flex max-w-[1240px] flex-wrap items-center justify-between gap-4.5 px-6">
-          <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-ink-muted">
-            Studios handing work over with Cloudify
-          </p>
-          <div className="flex flex-wrap items-center gap-3.5 font-display text-[19px] text-ink-soft">
-            <span className="inline-flex items-center gap-2.5">
-              <span className="h-3.5 w-3.5 rounded-full border-[3px] border-rust" />
-              Google Cloud
-            </span>
-            {TRUST_NAMES.map((name) => (
-              <span key={name}>{name}</span>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   );

@@ -9,14 +9,14 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <AppShellProvider>
       <AppShellGate>
-        <div className="grid min-h-screen [grid-template-columns:264px_minmax(0,1fr)]">
+        <div className="min-h-screen lg:grid lg:[grid-template-columns:264px_minmax(0,1fr)]">
           <Sidebar />
           <main className="flex min-w-0 flex-col">
             {/* useSearchParams in Topbar requires a Suspense boundary during static generation */}
             <Suspense>
               <Topbar />
             </Suspense>
-            <div className="flex-1 px-7.5 pt-8.5 pb-15">{children}</div>
+            <div className="flex-1 px-4 pt-6 pb-12 sm:px-7.5 sm:pt-8.5 sm:pb-15">{children}</div>
           </main>
         </div>
         <ModalRoot />

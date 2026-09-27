@@ -28,10 +28,10 @@ export function HeroPreviewCard() {
   return (
     <div className="relative">
       <div
-        className="absolute inset-[34px_-14px_-18px_26px] rotate-[2.4deg] rounded-[200px_200px_30px_30px] bg-[#efe7d6]"
+        className="absolute inset-[34px_-6px_-14px_18px] sm:inset-[34px_-14px_-18px_26px] rotate-[2.4deg] rounded-[120px_120px_30px_30px] sm:rounded-[200px_200px_30px_30px] bg-[#efe7d6]"
         aria-hidden="true"
       />
-      <div className="relative overflow-hidden rounded-[190px_190px_26px_26px] border border-line bg-paper shadow-[0_40px_80px_-46px_rgba(35,26,10,0.6)]">
+      <div className="relative overflow-hidden rounded-[110px_110px_26px_26px] sm:rounded-[190px_190px_26px_26px] border border-line bg-paper shadow-[0_40px_80px_-46px_rgba(35,26,10,0.6)]">
         <div className="bg-[linear-gradient(#f7f1e2,#fffcf5)] px-6.5 pt-7.5 pb-4.5 text-center">
           <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink-muted">
             Workspace / Client delivery

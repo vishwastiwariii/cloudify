@@ -10,7 +10,7 @@ export function Topbar() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { user } = useAppShell();
+  const { user, setSidebarOpen } = useAppShell();
   const [value, setValue] = useState(pathname === "/search" ? (searchParams.get("q") ?? "") : "");
 
   useEffect(() => {
@@ -35,8 +35,18 @@ export function Topbar() {
   };
 
   return (
-    <div className="sticky top-0 z-20 flex flex-wrap items-center gap-3 border-b border-line bg-cream/90 px-7.5 py-4 backdrop-blur-md">
-      <div className="flex min-w-55 flex-1 items-center gap-2.75 rounded-full border border-line bg-paper px-4.5 py-2.75">
+    <div className="sticky top-0 z-20 flex items-center gap-2.5 border-b border-line bg-cream/90 px-4 py-3 backdrop-blur-md sm:gap-3 sm:px-7.5 sm:py-4">
+      <button
+        type="button"
+        onClick={() => setSidebarOpen(true)}
+        aria-label="Open menu"
+        className="flex h-10.5 w-10.5 shrink-0 items-center justify-center rounded-full border border-line bg-paper text-ink lg:hidden"
+      >
+        <svg viewBox="0 0 20 20" fill="none" className="h-5 w-5" aria-hidden="true">
+          <path d="M3.5 6.5h13M3.5 13.5h13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        </svg>
+      </button>
+      <div className="flex min-w-0 flex-1 items-center gap-2.75 rounded-full border border-line bg-paper px-4.5 py-2.75">
         <span className="h-3.25 w-3.25 shrink-0 rounded-full border-2 border-[#8a8067]" aria-hidden="true" />
         <input
           type="text"
@@ -48,10 +58,10 @@ export function Topbar() {
         />
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex shrink-0 items-center gap-2.5 sm:gap-3">
         <Link
           href="/settings"
-          className="flex items-center gap-2.5 rounded-full border border-line bg-paper py-1.5 pr-3.5 pl-1.5"
+          className="flex items-center gap-2.5 rounded-full border border-line bg-paper p-1.5 sm:pr-3.5"
         >
           <span className="flex h-7.5 w-7.5 items-center justify-center overflow-hidden rounded-full bg-gold font-display text-sm">
             {user?.avatar ? (
@@ -61,7 +71,7 @@ export function Topbar() {
               (user?.name ?? "?").charAt(0).toUpperCase()
             )}
           </span>
-          <span className="text-sm font-semibold">{user?.name.split(" ")[0] ?? "..."}</span>
+          <span className="hidden text-sm font-semibold sm:inline">{user?.name.split(" ")[0] ?? "..."}</span>
         </Link>
         <button onClick={handleLogout} className="font-mono text-[11px] tracking-[0.1em] text-ink-muted uppercase">
           Log out

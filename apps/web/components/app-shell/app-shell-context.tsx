@@ -39,6 +39,8 @@ type AppShellContextValue = {
   startUpload: (files: FileList | File[], folderId: string | null) => void;
   filesVersion: number;
   notifyFilesChanged: () => void;
+  sidebarOpen: boolean;
+  setSidebarOpen: (open: boolean) => void;
 };
 
 const AppShellContext = createContext<AppShellContextValue | null>(null);
@@ -50,6 +52,7 @@ export function AppShellProvider({ children }: { children: React.ReactNode }) {
   const [modal, setModal] = useState<Modal>(null);
   const [uploads, setUploads] = useState<UploadTask[]>([]);
   const [filesVersion, setFilesVersion] = useState(0);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const refreshUser = useCallback(async () => {
     const me = await getMe();
@@ -113,8 +116,10 @@ export function AppShellProvider({ children }: { children: React.ReactNode }) {
       startUpload,
       filesVersion,
       notifyFilesChanged,
+      sidebarOpen,
+      setSidebarOpen,
     }),
-    [user, userLoading, refreshUser, modal, uploads, startUpload, filesVersion, notifyFilesChanged],
+    [user, userLoading, refreshUser, modal, uploads, startUpload, filesVersion, notifyFilesChanged, sidebarOpen],
   );
 
   return <AppShellContext.Provider value={value}>{children}</AppShellContext.Provider>;
